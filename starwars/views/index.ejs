@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title></title>
+	</head>
+	<link href="/stylesheets/bootstrap.css" rel="stylesheet">
+<body>
+
+<div>
+<section class="container" style="margin-top:50px;">
+												
+<input class=" people_name" placeholder="Enter character name" list="people_option" value="">
+<datalist id="people_option">
+  <option value="luke">
+  <option value="han">
+  <option value="leia">
+  <option value="rey">
+</datalist>
+<button type="button" class="people_search">Search</button>
+<div class="people_result"></div>
+</section>
+<section class="container" style="margin-top:20px;">
+<button type="button" class="character_search">Get panets list</button>
+<div class="Charact_result"></div>
+</section>
+
+<section class="container" style="margin-top:20px;">
+<button type="button" class="planet_search" data-last="false" data-url="http://swapi.co/api/planets/?page=1">Get panets list</button>
+<div class="planet_result"></div>
+</section>
+</div>
+</body>
+<script src="/javascripts/jquery.js"></script>
+<script src="/javascripts/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="/javascripts/bootstrap.min.js"></script>
+<script>
+	$(document).ready(function() {
+	$('.planet_search').click(function() {
+									
+	planetList(this);
+	});
+	
+	$('.people_search').click(function() {
+	
+	var searchVal=$('.people_name').val();
+	
+	if(searchVal==""){
+	alert("please enter value");
+	}else{
+	var data={};
+	data.search=searchVal;
+		$.ajax({
+				url : "/starwars/people",
+				type : "POST",
+				data : data,
+				success : function(data) {
+				console.log(data);
+				var response=data.data;
+				var forMax;
+				var resultLength=response.count;
+				
+				
+				if(resultLength>0){
+				
+				if(resultLength>10){
+				  forMax=10;
+				}else{
+				forMax=resultLength;
+				}
+				
+				var htmlResponse="";
+			for(var i=0;i<forMax;i++){
+			console.log(response.results[i].name);
+			var detail=JSON.stringify(response.results[i]);
+			htmlResponse+="<div style='border:3px solid #ccc;margin:20px 0px;'> "+detail+"</div>"
+			}
+				
+				
+				
+				$('.people_result').html(htmlResponse);
+				
+				}else{
+				alert("No Charachter is present in the given name");
+				}
+				
+				},
+					error : function() {
+							alert("Something went wrong");
+										}
+									});
+	
+	}
+	
+	});
+	});
+	function planetList(element){
+	var data={};
+	data.url=$(element).data('url');
+	
+	$.ajax({
+				url : "/planet/data",
+				type : "POST",
+				data : data,
+				success : function(data) {
+				console.log(data);
+				var response=JSON.stringify(data.data);
+				var nextBtn;
+				var prevBtn;
+				if(data.next=="null" || data.next==null){
+				nextBtn="";
+				
+				}else{
+				nextBtn='<button type="button" class="planet_search" data-url='+data.next+'>NEXT</button>';
+				}
+				
+				if(data.prev=="null" || data.prev==null){
+				prevBtn="";
+				}else{
+				
+				prevBtn='<button type="button" class="planet_search" data-url='+data.prev+'>PREV</button>';
+				}
+				
+				$('.planet_result').html("<div>"+response+"</div><div>"+prevBtn+" "+nextBtn+"</div>");
+				
+				
+				$('.planet_search').unbind().click(function() {
+				planetList(this);
+				});
+				
+				},
+					error : function() {
+							alert("Something went wrong");
+										}
+									});
+									
+	
+	}
+</script>
+</html>
