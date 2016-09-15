@@ -14,7 +14,7 @@
 <body>
 
 <div>
-<section class="container" style="margin-top:50px;">
+<section class="container" style="border:2px solid orange;margin-top:50px;padding:20px;">
 												
 <input class=" people_name" placeholder="Enter character name" list="people_option" value="">
 <datalist id="people_option">
@@ -26,13 +26,13 @@
 <button type="button" class="people_search">Search</button>
 <div class="people_result"></div>
 </section>
-<section class="container" style="margin-top:20px;">
-<button type="button" class="character_search">Get panets list</button>
+<section class="container" style="border:2px solid blue;margin-top:20px;padding:20px;">
+<button type="button" class="character_search">Get 50 Charachter</button>
 <div class="Charact_result"></div>
 </section>
 
-<section class="container" style="margin-top:20px;">
-<button type="button" class="planet_search" data-last="false" data-url="http://swapi.co/api/planets/?page=1">Get panets list</button>
+<section class="container" style="border:2px solid green;margin-top:20px;padding:20px;">
+<button type="button" class="planet_search" data-last="false" data-url="http://swapi.co/api/planets/?page=1">Get planets list</button>
 <div class="planet_result"></div>
 </section>
 </div>
@@ -52,7 +52,7 @@
 	var searchVal=$('.people_name').val();
 	
 	if(searchVal==""){
-	alert("please enter value");
+	alert("Please enter value");
 	}else{
 	var data={};
 	data.search=searchVal;
