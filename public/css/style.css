@@ -263,6 +263,9 @@ img{
 
 }
 
+.aqua {
+	color: #37c6f5;
+}
 /*--------------------*/
 /* MENU */
 /*--------------------*/
@@ -997,6 +1000,14 @@ img{
 	-o-transition: background-color 0.5s linear;
 	-ms-transition: background-color 0.5s linear;
 	transition: background-color 0.5s linear;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 6px;
+	transition: box-shadow 0.15s ease-in-out, transform 0.15s ease-in-out;
+	overflow: hidden;
+}
+.single-item-content:hover {
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 30px;
+	transform: scale(1.02);
+	z-index: 999;
 }
 .portfolio-social-icon {  
 	float: left;
@@ -1456,6 +1467,17 @@ img{
 	padding: 10px 12px
 }
 
+article.single-from-blog{
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 6px;
+	border-radius: 5px;
+	transition: box-shadow 0.15s ease-in-out, transform 0.15s ease-in-out;
+	overflow: hidden;
+}
+article.single-from-blog:hover {
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 30px;
+	transform: scale(1.02);
+	z-index: 999;
+}
 /*--------------------*/
 /* CLIENT */
 /*--------------------*/
