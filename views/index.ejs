@@ -33,6 +33,12 @@
 				<datalist id="people_option">
 					<option value="luke"><option value="han"><option value="leia"><option value="rey">
 				</datalist>
+				<input class="contactname" id="contactname" placeholder="Enter your name" />
+				<input class="contactemail" id="contactemail" placeholder="Enter email id" />
+				<input class="contactnumber" id="contactnumber" placeholder="Enter contact number" />
+				<textarea rows="4" cols="50" class="contactmsg" id="contactmsg">
+				At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies.
+				</textarea>
 				<button type="button" class="people_search">
 					Search
 				</button>
@@ -101,11 +107,16 @@
 
 				var searchVal = $('.people_name').val();
 
+
 				if (searchVal == "") {
 					alert("Please enter value");
 				} else {
 					var data = {};
 					data.search = searchVal;
+					data.name = $('.contactname').val();;
+					data.email = $('.contactemail').val();;
+					data.number = $('.contactnumber').val();;
+					data.msg=$('.contactmsg').val();;
 					$.ajax({
 						url : "/starwars/people",
 						type : "POST",
