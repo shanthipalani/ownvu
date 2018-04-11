@@ -2,7 +2,6 @@ var express = require('express'),
 	request = require('request'),
 	http = require('http'),
 	router = express.Router(),
-	async = require('async'),
     path = require('path'),
 	nodeMailer = require('nodemailer');
 
@@ -46,66 +45,6 @@ router.post('/contact/mail', function(req, res, next) {
             });
         };
     });
-});
-router.post('/character/json', function(req, res, next) {
-
-	var limit = req.body.limit;
-	var pagecount = 50 / 10;
-
-	var i = 1;
-	var characterArray = [];
-
-	async.whilst(function() {
-		return i <= pagecount;
-	}, function(searchIndexLoop) {
-		var url = "https://swapi.co/api/people/?page=" + i;
-		console.log(url);
-		request(url, function(error, response, html) {
-			if (error) {
-				console.log('Error:', error);
-			} else {
-				var result=JSON.parse(html);
-				characterArray.push(result.results);
-				i++;
-				searchIndexLoop();
-			}
-		});
-	}, function(err, reult) {
-		console.log(characterArray);
-		console.log('Search index completed');
-		res.send({
-			flag : true,
-			data : characterArray
-		});
-	});
-
-});
-
-router.post('/planet/data', function(req, res, next) {
-	var searchURl = req.body.url;
-	request(searchURl, function(error, response, html) {
-
-		if (error) {
-			console.log('Error:', error);
-			res.send({
-				flag : false
-			});
-		} else {
-			var resData = JSON.parse(html);
-			var datam = {};
-
-			for (var i = 0; i < resData.results.length; i++) {
-				datam[resData.results[i].name] = resData.results[i].residents;
-			}
-			res.send({
-				flag : true,
-				data : datam,
-				next : resData.next,
-				prev : resData.previous
-			});
-		}
-
-	});
 });
 
 module.exports = router;
