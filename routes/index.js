@@ -7,7 +7,13 @@ var express = require('express'),
 
 var config =require('../config/config');
 var transporter = nodeMailer.createTransport({
-    service: 'Gmail',
+    type: 'smtp',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    tls: {
+        rejectUnauthorized: false
+    },
     auth: {
         user: config.gmail.username,
         pass: config.gmail.password
